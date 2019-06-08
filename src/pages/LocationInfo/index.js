@@ -25,7 +25,7 @@ export default class LocationInfo extends Component {
           }}
         />
 
-        <Card style={{ width: '90%', alignSelf: 'center', elevation: '10' }}>
+        <Card style={{ width: '90%', alignSelf: 'center', elevation: 10 }}>
           <CardItem header>
             <Information>
               <Name>{local.name}</Name>
@@ -40,7 +40,11 @@ export default class LocationInfo extends Component {
             <BookingButton>
               <Text>Reserva</Text>
             </BookingButton>
-            <EventButton>
+            <EventButton
+              onPress={() => {
+                navigation.navigate('NextEvents', { events: local.events });
+              }}
+            >
               <Text>Eventos proximos</Text>
             </EventButton>
           </CardItem>
