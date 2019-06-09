@@ -5,22 +5,26 @@ import {
 } from 'native-base';
 import StyledHeader from '../../components/StyledHeader';
 import SucessModal from '../../components/SuccessModal';
+import Loader from '../../components/Loader';
 
 export default class NextEvents extends Component {
   state = {
     events: [],
-    showModal: false
+    showModal: false,
+    loading: false
   };
 
   componentDidMount() {
+    this.setState({ loading: true });
     const { navigation } = this.props;
     const events = navigation.getParam('events');
     const eventsArray = Object.values(events);
-    this.setState({ events: eventsArray });
+    this.setState({ events: eventsArray, loading: false });
   }
 
   render() {
-    const { events, showModal } = this.state;
+    const { events, showModal, loading } = this.state;
+
     return (
       <Container>
         <StyledHeader title="Eventos" />
@@ -43,9 +47,12 @@ export default class NextEvents extends Component {
             </ListItem>
           ))}
         </List>
+
         {showModal === true && (
           <SucessModal title="Parabens" message="Ingresso comprado com sucesso" />
         )}
+
+        {loading === true && <Loader />}
       </Container>
     );
   }

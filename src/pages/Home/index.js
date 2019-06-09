@@ -6,19 +6,23 @@ import {
 } from 'native-base';
 import * as firebase from 'firebase';
 import { StyledMapView } from './styles';
+import Loader from '../../components/Loader';
 
 export default class Home extends React.Component {
   state = {
     currentLocation: null,
-    locationsArray: []
+    locationsArray: [],
+    loading: false
   };
 
   async componentDidMount() {
+    this.setState({ loading: true });
     const currentLocation = await this.getUserLocation();
-    this.getLocationsFromFirebase();
+    await this.getLocationsFromFirebase();
 
     this.setState({
-      currentLocation
+      currentLocation,
+      loading: false
     });
   }
 
@@ -26,7 +30,8 @@ export default class Home extends React.Component {
     const db = firebase.database();
     const snapshot = await db.ref('/location').once('value');
     const locationsArray = Object.values(snapshot.val());
-    this.setState({ locationsArray });
+
+    return this.setState({ locationsArray });
   };
 
   getUserLocation = async () => {
@@ -50,8 +55,9 @@ export default class Home extends React.Component {
   };
 
   render() {
-    const { currentLocation, locationsArray } = this.state;
+    const { currentLocation, locationsArray, loading } = this.state;
     const { navigation } = this.props;
+
     return (
       <View style={{ flex: 1 }}>
         <Header searchBar transparent>
@@ -66,7 +72,10 @@ export default class Home extends React.Component {
             && locationsArray.map(location => (
               <MapView.Marker
                 onPress={() => navigation.navigate('LocationInfo', { location })}
-                coordinate={{ latitude: location.latitude, longitude: location.longitude }}
+                coordinate={{
+                  latitude: location.latitude,
+                  longitude: location.longitude
+                }}
               >
                 <Icon name="pin" style={{ color: '#FF6347', fontSize: 33 }} />
               </MapView.Marker>
@@ -75,6 +84,8 @@ export default class Home extends React.Component {
         <Fab transparent style={{ backgroundColor: '#fff' }} position="bottomRight">
           <Icon name="compass" style={{ fontSize: 30, color: '#FF6347' }} />
         </Fab>
+
+        {loading && <Loader />}
       </View>
     );
   }
