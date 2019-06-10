@@ -18,9 +18,7 @@ export default class SucessModal extends Component {
   state = {};
 
   render() {
-    const {
-      title, message, onConfirm, onClose
-    } = this.props;
+    const { title, message, onClose } = this.props;
 
     return (
       <ModalContainer onRequestClose={onClose}>
@@ -35,12 +33,6 @@ export default class SucessModal extends Component {
           </ModalContent>
 
           <ModalFooter>
-            {onConfirm && (
-              <Button dark small onPress={onConfirm}>
-                <Text>Confirmar</Text>
-              </Button>
-            )}
-
             <Button transparent small onPress={onClose}>
               <Text dark>Fechar</Text>
             </Button>
@@ -54,10 +46,5 @@ export default class SucessModal extends Component {
 SucessModal.propTypes = {
   title: PropTypes.string.isRequired,
   message: PropTypes.string.isRequired,
-  onConfirm: PropTypes.func,
   onClose: PropTypes.func.isRequired
-};
-
-SucessModal.defaultProps = {
-  onConfirm: null
 };

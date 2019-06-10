@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import {
@@ -25,8 +26,9 @@ export default class NextEvents extends Component {
       <Container>
         <StyledHeader title="Eventos" />
         <List>
-          {events.map(event => (
+          {events.map((event, index) => (
             <ListItem
+              key={index}
               thumbnail
               onPress={() => {
                 this.setState({ showModal: true });
@@ -44,7 +46,13 @@ export default class NextEvents extends Component {
           ))}
         </List>
         {showModal === true && (
-          <SucessModal title="Parabens" message="Ingresso comprado com sucesso" />
+          <SucessModal
+            title="Parabens"
+            message="Ingresso comprado com sucesso"
+            onClose={() => {
+              this.setState({ showModal: false });
+            }}
+          />
         )}
       </Container>
     );

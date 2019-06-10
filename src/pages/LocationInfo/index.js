@@ -20,8 +20,7 @@ export default class LocationInfo extends Component {
         <Image
           style={{ height: 180, resizeMode: 'contain' }}
           source={{
-            uri:
-              'https://st2.depositphotos.com/8301258/11963/v/950/depositphotos_119634124-stock-illustration-restaurant-logo-cutlery-design.jpg'
+            uri: local.photo
           }}
         />
 
@@ -37,7 +36,11 @@ export default class LocationInfo extends Component {
             </Body>
           </CardItem>
           <CardItem footer style={{ marginTop: 'auto' }}>
-            <BookingButton>
+            <BookingButton
+              onPress={() => {
+                navigation.navigate('BookingMenu');
+              }}
+            >
               <Text>Reserva</Text>
             </BookingButton>
             <EventButton

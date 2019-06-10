@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import { View } from 'react-native';
 import { Location, Permissions, MapView } from 'expo';
@@ -63,8 +64,9 @@ export default class Home extends React.Component {
         </Header>
         <StyledMapView showsUserLocation region={currentLocation}>
           {locationsArray.length > 0
-            && locationsArray.map(location => (
+            && locationsArray.map((location, index) => (
               <MapView.Marker
+                key={index}
                 onPress={() => navigation.navigate('LocationInfo', { location })}
                 coordinate={{ latitude: location.latitude, longitude: location.longitude }}
               >
