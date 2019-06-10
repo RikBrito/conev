@@ -56,7 +56,7 @@ export default class BookingMenu extends Component {
           </Form>
 
           <Button
-            style={{ marginTop: 'auto', color: '#ff6347;' }}
+            style={{ marginTop: 'auto', color: '#ff6347;B' }}
             onPress={() => {
               this.setState({ showModal: true });
             }}
